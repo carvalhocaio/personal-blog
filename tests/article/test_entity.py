@@ -140,6 +140,6 @@ class TestUpdate:
 
         assert exc_info.value.errors == (TITLE_REQUIRED,)
 
-    def test_instances_are_frozen(self) -> None:# noqa: E501
+    def test_instances_are_frozen(self) -> None:  # noqa: E501
         with pytest.raises(FrozenInstanceError):
             build_article().title = "Blurryface"  # type: ignore[misc]
