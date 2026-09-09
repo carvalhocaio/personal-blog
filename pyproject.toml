@@ -20,3 +20,7 @@ build-backend = "uv_build"
 dev = [
     "ruff>=0.16.6",
 ]
+
+[tool.pytest.ini_options]
+addopts = "--import-mode=importlib"
+testpaths = ["tests"]
