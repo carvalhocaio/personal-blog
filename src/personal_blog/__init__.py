@@ -5,7 +5,7 @@ from personal_blog.config import Settings
 from personal_blog.web.app import create_app
 
 
-def main() -> None:
+def main() -> None:  # pragma: no cover
     settings = Settings()
     repository = FileSystemArticleRepository(settings.content_dir)
 

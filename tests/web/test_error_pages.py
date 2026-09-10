@@ -1,5 +1,6 @@
 import pytest
 from httpx import AsyncClient
+from starlette.exceptions import HTTPException as StarletteHTTPException
 
 from tests.web.conftest import SITE_TITLE
 
@@ -35,3 +36,13 @@ class TestNotFoundPage:
         response = await client.get("/admin/articles/never-published/edit")
 
         assert "/admin/logout" not in response.text
+
+
+class TestOtherHttpErrors:
+    async def test_does_not_render_the_not_found_page(
+        self, client: AsyncClient
+    ) -> None:
+        with pytest.raises(StarletteHTTPException) as excinfo:
+            await client.get("/admin/logout")
+
+        assert excinfo.value.status_code == 405

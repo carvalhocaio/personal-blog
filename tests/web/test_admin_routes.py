@@ -244,6 +244,19 @@ class TestEditArticle:
         assert response.status_code == 422
         assert "content is required" in response.text
 
+    async def test_rejects_an_unparseable_date(
+        self, admin_client: AsyncClient, repository: InMemoryArticleRepository
+    ) -> None:
+        await repository.create(make_article())
+
+        response = await admin_client.post(
+            "/admin/articles/why-clancy-matters/edit",
+            data={**ARTICLE_FORM, "published_at": "yesterday"},
+        )
+
+        assert response.status_code == 422
+        assert "published date must be a valid date" in response.text
+
     async def test_returns_404_when_updating_an_unknown_article(
         self, admin_client: AsyncClient
     ) -> None:

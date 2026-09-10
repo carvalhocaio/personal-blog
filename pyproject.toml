@@ -29,9 +29,21 @@ dev = [
     "anyio>=4.15.1",
     "httpx>=0.28.1",
     "pytest>=9.1.1",
+    "pytest-cov>=7.0.0",
     "ruff>=0.16.6",
 ]
 
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib"
 testpaths = ["tests"]
+
+[tool.coverage.run]
+source = ["personal_blog"]
+omit = ["*/__main__.py"]
+
+[tool.coverage.report]
+fail_under = 100
+show_missing = true
+exclude_also = [
+    "pragma: no cover",
+]
