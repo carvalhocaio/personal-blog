@@ -6,6 +6,7 @@ from fastapi import FastAPI
 from httpx import ASGITransport, AsyncClient
 
 from personal_blog.article.entity import Article
+from personal_blog.auth.session import COOKIE_NAME, issue_session
 from personal_blog.config import MIN_SESSION_KEY_LENGTH, Settings
 from personal_blog.web.app import create_app
 from tests.fakes import InMemoryArticleRepository
@@ -44,6 +45,14 @@ async def client(app: FastAPI) -> AsyncIterator[AsyncClient]:
         follow_redirects=False,
     ) as client:
         yield client
+
+
+@pytest.fixture
+def admin_client(client: AsyncClient, settings: Settings) -> AsyncClient:
+    client.cookies.set(
+        COOKIE_NAME, issue_session(settings.session_key_bytes, settings.session_ttl)
+    )
+    return client
 
 
 def make_article(
