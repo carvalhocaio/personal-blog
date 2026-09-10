@@ -1,0 +1,11 @@
+{% extends "base.html" %}
+
+{% block page_title %}{{ article.title }} · {{ site_title }}{% endblock %}
+
+{% block content %}
+<article class="card">
+  <h1>{{ article.title }}</h1>
+  <p class="article-date">{{ article.published_at | format_date }}</p>
+  <div class="article-content">{{ content_html }}</div>
+</article>
+{% endblock %}
