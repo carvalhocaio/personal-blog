@@ -1,0 +1,6 @@
+{
+  "slug": "second-sample-article",
+  "title": "Second sample article",
+  "content": "## Just another example\n\nThis second article exists only so `make seed` populates `content/` with more than one item, allowing listing and date ordering to be tested.\n\n- Item one\n- Item two\n- Item three",
+  "published_at": "2026-01-10"
+}

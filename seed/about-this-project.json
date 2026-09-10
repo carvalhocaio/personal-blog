@@ -1,0 +1,6 @@
+{
+  "slug": "about-this-project",
+  "title": "About this project",
+  "content": "## About\n\nThis blog is built with FastAPI and stores articles as `.json` files on the filesystem, one per slug.\n\nThe data in this article is just seed content for local testing.",
+  "published_at": "2026-01-05"
+}

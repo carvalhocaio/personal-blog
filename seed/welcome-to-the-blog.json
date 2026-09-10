@@ -1,0 +1,6 @@
+{
+  "slug": "welcome-to-the-blog",
+  "title": "Welcome to the blog",
+  "content": "## Welcome\n\nThis is the first sample article, used only to populate the local development environment via `make seed`.\n\nFeel free to edit or remove this content — it is not used in production.",
+  "published_at": "2026-01-01"
+}
