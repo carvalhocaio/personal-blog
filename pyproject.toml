@@ -7,7 +7,9 @@ authors = [
     { name = "Caio Carvalho", email = "caiocarvalho.py@gmail.com" }
 ]
 requires-python = ">=3.13"
-dependencies = []
+dependencies = [
+    "anyio>=4.15.1",
+]
 
 [project.scripts]
 personal-blog = "personal_blog:main"

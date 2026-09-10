@@ -1,7 +1,11 @@
 from datetime import date
 
 from personal_blog.article.entity import Article
-from personal_blog.article.repository import ArticleNotFoundError, SlugAlreadyTakenError
+from personal_blog.article.repository import (
+    ArticleNotFoundError,
+    SlugAlreadyTakenError,
+    sort_by_publication,
+)
 
 
 class InMemoryArticleRepository:
@@ -29,7 +33,7 @@ class InMemoryArticleRepository:
             raise ArticleNotFoundError(slug)
 
     async def list_all(self) -> list[Article]:
-        return sorted(self._articles.values(), key=_publication_order)
+        return sort_by_publication(self._articles.values())
 
 
 def _publication_order(article: Article) -> tuple[date, str]:
