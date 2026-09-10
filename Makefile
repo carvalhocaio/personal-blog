@@ -1,23 +1,23 @@
-.PHONY: help lint lint-fix format format-check check
+.PHONY: run test lint format seed clean
 
-help:
-	@echo "Available Makefile commands:"
-	@echo "  make lint             - Runs the linter (ruff check)"
-	@echo "  make lint-fix         - Automatically fixes linter issues (ruff check --fix)"
-	@echo "  make format           - Formats the code (ruff format)"
-	@echo "  make format-check     - Checks whether the code is formatted (ruff format --check)"
-	@echo "  make check            - Runs the linter and validates formatting"
+run:
+	uv run python -m personal_blog
+
+test:
+	uv run pytest
 
 lint:
 	uv run ruff check .
-
-lint-fix:
-	uv run ruff check --fix .
+	uv run ruff format --check .
 
 format:
 	uv run ruff format .
+	uv run ruff check --fix .
 
-format-check:
-	uv run ruff format --check .
+seed:
+	mkdir -p content
+	cp seed/*.json content/
 
-check: lint format-check
+clean:
+	rm -rf content .pytest_cache .ruff_cache
+	find . -type d -name __pycache__ -exec rm -rf {} +
