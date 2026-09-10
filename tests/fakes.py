@@ -1,5 +1,3 @@
-from datetime import date
-
 from personal_blog.article.entity import Article
 from personal_blog.article.repository import (
     ArticleNotFoundError,
@@ -34,7 +32,3 @@ class InMemoryArticleRepository:
 
     async def list_all(self) -> list[Article]:
         return sort_by_publication(self._articles.values())
-
-
-def _publication_order(article: Article) -> tuple[date, str]:
-    return (article.published_at, article.slug)

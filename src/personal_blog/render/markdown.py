@@ -140,7 +140,7 @@ def _replace_link(match: re.Match[str]) -> str:
 
 
 def _is_safe_url(url: str) -> bool:
-    if url.startswith(_SAFE_URL_SCHEMES):
+    if url.lower().startswith(_SAFE_URL_SCHEMES):
         return True
 
     return url.startswith("/") and not url.startswith("//")

@@ -1,4 +1,5 @@
 from datetime import timedelta
+from pathlib import Path
 
 import pytest
 from pydantic import ValidationError
@@ -15,7 +16,7 @@ VALID_ENVIRONMENT = {
 @pytest.fixture(autouse=True)
 def clean_environment(monkeypatch: pytest.MonkeyPatch) -> None:
     for variable in [
-        "BLOG_ADDR",
+        "BLOG_HOST",
         "BLOG_PORT",
         "BLOG_CONTENT_DIR",
         "BLOG_TITLE",
@@ -92,6 +93,25 @@ class TestValidation:
         with pytest.raises(ValidationError):
             load(monkeypatch, BLOG_TITLE="   ")
 
+    def test_rejects_a_blank_host(self, monkeypatch: pytest.MonkeyPatch) -> None:
+        with pytest.raises(ValidationError):
+            load(monkeypatch, BLOG_HOST="   ")
+
+    def test_rejects_a_content_dir_that_is_a_file(
+        self, monkeypatch: pytest.MonkeyPatch, tmp_path: Path
+    ) -> None:
+        blocked = tmp_path / "content"
+        blocked.write_text("not a directory")
+
+        with pytest.raises(ValidationError):
+            load(monkeypatch, BLOG_CONTENT_DIR=str(blocked))
+
+    def test_rejects_unknown_environment_variables(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        with pytest.raises(ValidationError):
+            load(monkeypatch, BLOG_UNKNOWN_SETTING="whatever")
+
     @pytest.mark.parametrize("ttl", ["0", "-3600", "not-a-duration"])
     def test_rejects_a_non_positive_session_ttl(
         self, monkeypatch: pytest.MonkeyPatch, ttl: str
@@ -106,13 +126,13 @@ class TestValidation:
 
         assert settings.session_ttl == timedelta(hours=1)
 
-        def test_reports_every_problem_at_once(
-            self, monkeypatch: pytest.MonkeyPatch
-        ) -> None:
-            monkeypatch.setenv("BLOG_SESSION_KEY", "short")
+    def test_reports_every_problem_at_once(
+        self, monkeypatch: pytest.MonkeyPatch
+    ) -> None:
+        monkeypatch.setenv("BLOG_SESSION_KEY", "short")
 
-            with pytest.raises(ValidationError) as exc_info:
-                Settings()
+        with pytest.raises(ValidationError) as exc_info:
+            Settings()
 
-            reported = {error["loc"][0] for error in exc_info.value.errors()}
-            assert reported == {"admin_user", "admin_password", "session_key"}
+        reported = {error["loc"][0] for error in exc_info.value.errors()}
+        assert reported == {"admin_user", "admin_password", "session_key"}

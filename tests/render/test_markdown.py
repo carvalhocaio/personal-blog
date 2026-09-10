@@ -103,6 +103,7 @@ class TestLinks:
         [
             "https://roadmap.sh/projects/personal-blog",
             "http://example.com",
+            "HTTPS://example.com",
             "/articles/trench",
         ],
     )

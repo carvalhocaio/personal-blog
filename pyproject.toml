@@ -1,8 +1,9 @@
 [project]
 name = "personal-blog"
 version = "0.1.0"
-description = "Add your description here"
+description = "Personal blog built with FastAPI, backed by a filesystem article store."
 readme = "README.md"
+license = "MIT"
 authors = [
     { name = "Caio Carvalho", email = "caiocarvalho.py@gmail.com" }
 ]
@@ -28,6 +29,7 @@ build-backend = "uv_build"
 dev = [
     "anyio>=4.15.1",
     "httpx>=0.28.1",
+    "mypy>=1.14.0",
     "pytest>=9.1.1",
     "pytest-cov>=7.0.0",
     "ruff>=0.16.6",
@@ -36,6 +38,11 @@ dev = [
 [tool.pytest.ini_options]
 addopts = "--import-mode=importlib"
 testpaths = ["tests"]
+
+[tool.mypy]
+python_version = "3.13"
+strict = true
+files = ["src"]
 
 [tool.coverage.run]
 source = ["personal_blog"]

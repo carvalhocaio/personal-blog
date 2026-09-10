@@ -6,7 +6,10 @@ from personal_blog.web.app import create_app
 
 
 def main() -> None:  # pragma: no cover
-    settings = Settings()
+    # admin_user/admin_password/session_key have no defaults because they're
+    # meant to come from the environment, not the constructor — mypy can't
+    # know that, hence the ignore.
+    settings = Settings()  # type: ignore[call-arg]
     repository = FileSystemArticleRepository(settings.content_dir)
 
     uvicorn.run(

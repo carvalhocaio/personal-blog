@@ -1,4 +1,4 @@
-from typing import Annotated
+from typing import Annotated, cast
 
 from fastapi import Depends, Request
 from fastapi.templating import Jinja2Templates
@@ -9,15 +9,15 @@ from personal_blog.config import Settings
 
 
 def get_settings(request: Request) -> Settings:
-    return request.app.state.settings
+    return cast(Settings, request.app.state.settings)
 
 
 def get_repository(request: Request) -> ArticleRepository:
-    return request.app.state.repository
+    return cast(ArticleRepository, request.app.state.repository)
 
 
 def get_templates(request: Request) -> Jinja2Templates:
-    return request.app.state.templates
+    return cast(Jinja2Templates, request.app.state.templates)
 
 
 SettingsDep = Annotated[Settings, Depends(get_settings)]

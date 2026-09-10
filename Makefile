@@ -1,4 +1,4 @@
-.PHONY: run test coverage lint format seed clean
+.PHONY: run test coverage typecheck lint format seed clean
 
 run:
 	uv run python -m personal_blog
@@ -8,6 +8,9 @@ test:
 
 coverage:
 	uv run pytest --cov=personal_blog --cov-report=term-missing
+
+typecheck:
+	uv run mypy src
 
 lint:
 	uv run ruff check .
