@@ -232,7 +232,7 @@ def _render_invalid_form(
     templates: TemplatesDep, request: Request, settings: Settings, form: ArticleForm
 ) -> HTMLResponse:
     return _render_form(
-        templates, request, settings, form, status.HTTP_422_UNPROCESSABLE_ENTITY
+        templates, request, settings, form, status.HTTP_422_UNPROCESSABLE_CONTENT
     )
 
 
