@@ -1,0 +1,28 @@
+{% extends "base.html" %}
+
+{% block content %}
+<div class="card">
+  <div class="dashboard-header">
+    <h1>{{ site_title }}</h1>
+    <a class="button" href="/admin/articles/new">+ Add</a>
+  </div>
+  {% if not articles %}
+  <p class="empty-state">No articles yet. Add your first one.</p>
+  {% else %}
+  <ul class="article-list article-list-admin">
+    {% for article in articles %}
+    <li class="article-list-item">
+      <span class="article-title">{{ article.title }}</span>
+      <span class="article-date">{{ article.published_at | format_date }}</span>
+      <span class="article-actions">
+        <a href="/admin/articles/{{ article.slug }}/edit">Edit</a>
+        <form method="post" action="/admin/articles/{{ article.slug }}/delete" class="inline-form">
+          <button type="submit" class="link-button">Delete</button>
+        </form>
+      </span>
+    </li>
+    {% endfor %}
+  </ul>
+  {% endif %}
+</div>
+{% endblock %}
