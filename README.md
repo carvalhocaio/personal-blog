@@ -122,6 +122,14 @@ test suite with coverage — see
 
 ---
 
+## Project origin
+
+Built as an implementation of the
+[Personal Blog](https://roadmap.sh/projects/personal-blog) project from
+[roadmap.sh](https://roadmap.sh).
+
+---
+
 ## License
 
 MIT — see [LICENSE](LICENSE).
